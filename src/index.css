@@ -10,6 +10,38 @@ html {
 
 body {
   margin: 0;
-  background-color: #3f3f3f;
+  background-color: #222831;
+}
+
+.dark-bg {
+  background-color: #222831 !important;
+}
+
+.dark-text {
+  color: #222831 !important;
+}
+
+.gray-bg {
+  background-color: #393e46 !important;
+}
+
+.gray-text {
+  color: #393e46 !important;
+}
+
+.blue-bg {
+  background-color: #00adb5 !important;
+}
+
+.blue-text {
+  color: #00adb5 !important;
+}
+
+.white-bg {
+  background-color: #eeeeee !important;
+}
+
+.white-text {
+  color: #eeeeee !important;
 }
 

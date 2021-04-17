@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Loading from "./components/Loading";
+import Filter from "./components/Filter";
+import ItemList from "./components/ItemList";
 
 const BASE_URL = "https://swapi.dev/api";
 let allItems = [];
+
 function App() {
   let [items, setItems] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
@@ -39,20 +43,22 @@ function App() {
     return await (await fetch(url)).json();
   }
 
-  function onChangeSearchHandler(e) {
-    let filter = document.querySelector('#filter').value;
-    let value = e.target.value;
+  function onChangeSearchHandler(filterObj) {
     let filteredItems;
-    if (filter == 'name') {
+
+    if (filterObj.filter == "name") {
       filteredItems = allItems.filter(
-        (x) => x.name && x.name.toLowerCase().includes(value.toLowerCase())
+        (x) =>
+          x.name && x.name.toLowerCase().includes(filterObj.value.toLowerCase())
       );
-    } else if (filter) {
+    } else if (filterObj.filter) {
       filteredItems = allItems.filter(
-        (x) => x.homeWorld && x.homeWorld.toLowerCase().includes(value.toLowerCase())
+        (x) =>
+          x.homeWorld &&
+          x.homeWorld.toLowerCase().includes(filterObj.value.toLowerCase())
       );
     }
-    
+
     window.scrollTo(0, 0);
     setItems(filteredItems);
   }
@@ -60,43 +66,11 @@ function App() {
   return (
     <React.Fragment>
       {isLoading ? (
-        <h1 className="blue-text position-absolute top-50 start-50 translate-middle mt-1 bi bi-caret-down-fill">
-          Loading...
-        </h1>
+        <Loading />
       ) : (
         <div className="container">
-          <div className="row">
-            <div className="col-md-9">
-              <input
-                className="sticky-top form-control bg-dark blue-text border border-primary"
-                onChange={onChangeSearchHandler}
-              ></input>
-            </div>
-            <div className="col-md-3">
-              <select
-                id="filter"
-                className="form-select blue-text bg-dark border border-primary"
-                aria-label="Default select example"
-              >
-                <option className="blue-text" value="name" selected>Name</option>
-                <option className="blue-text" value="homeworld">Homeworld</option>
-              </select>
-            </div>
-          </div>
-
-          <ul className="list-group border border-dark">
-            {!isLoading &&
-              items.map((x) => (
-                <li key={x.name} className="bg-dark blue-text list-group-item">
-                  <div>
-                    <h4>{x.name}</h4>
-                    <h4 className="white-text">
-                      {`${x.homeWorld == "unknown" || !x.homeWorld ? "Unknown" : x.homeWorld}`}
-                    </h4>
-                  </div>
-                </li>
-              ))}
-          </ul>
+          <Filter filter={onChangeSearchHandler} />
+          <ItemList isLoading={isLoading} items={items}/>
         </div>
       )}
     </React.Fragment>

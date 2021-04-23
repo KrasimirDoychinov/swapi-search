@@ -12,7 +12,7 @@ function Filter(props) {
   }
   return (
     <div className="row">
-      <div className="col-md-6">
+      <div className="col-md-8">
         <input
           className="sticky-top form-control bg-dark blue-text border border-primary"
           onChange={onChangeSearchHandler}

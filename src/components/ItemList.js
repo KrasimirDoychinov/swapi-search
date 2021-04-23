@@ -8,11 +8,9 @@ function ItemList(props) {
             <div>
               <h4>{x.name}</h4>
               <h4 className="white-text">
-                {`${
-                  x.homeWorld == "unknown" || !x.homeWorld
-                    ? "Unknown"
-                    : x.homeWorld
-                }`}
+                {x.homeWorld && x.homeWorld}
+                {x.manufacturer && x.manufacturer}
+                {x._terrain && x._terrain}
               </h4>
             </div>
           </li>

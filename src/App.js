@@ -30,9 +30,11 @@ function App() {
         if (x.homeworld) {
           let obj = await getSingleItem(x.homeworld);
           x.homeWorld = obj.name;
-        } else if (x.manufacturer) {
-          x.homeWorld = x.manufacturer;
-        } 
+        }
+
+        if (x.terrain) {
+          x._terrain = x.terrain.split(', ').map(x => x.slice(0, 1).toUpperCase() + x.slice(1).toLowerCase()).join(', ');
+        }
       }
       allItems.push(x);
     });

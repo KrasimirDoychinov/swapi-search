@@ -11,17 +11,18 @@ function App() {
   let [isLoading, setIsLoading] = useState(false);
 
   useEffect(async () => {
-    await getAllItems(`${BASE_URL}/people/`);
-    await getAllItems(`${BASE_URL}/species/`);
-    await getAllItems(`${BASE_URL}/planets/`);
-    await getAllItems(`${BASE_URL}/starships/`);
-    await getAllItems(`${BASE_URL}/vehicles/`);
+    setIsLoading(true);
+    let people = getAllItems(`${BASE_URL}/people/`);
+    let species = getAllItems(`${BASE_URL}/species/`);
+    let planets = getAllItems(`${BASE_URL}/planets/`);
+    let starships = getAllItems(`${BASE_URL}/starships/`);
+    let vehicles = getAllItems(`${BASE_URL}/vehicles/`);
+    await Promise.all([people, species, planets, starships, vehicles]);
     setItems(allItems);
     setIsLoading(false);
   }, []);
 
   async function getAllItems(url) {
-    setIsLoading(true);
     let res = await (await fetch(url)).json();
 
     res.results.forEach(async (x) => {
@@ -29,9 +30,11 @@ function App() {
         if (x.homeworld) {
           let obj = await getSingleItem(x.homeworld);
           x.homeWorld = obj.name;
-        }
-        allItems.push(x);
+        } else if (x.manufacturer) {
+          x.homeWorld = x.manufacturer;
+        } 
       }
+      allItems.push(x);
     });
 
     if (res.next) {
@@ -69,8 +72,8 @@ function App() {
         <Loading />
       ) : (
         <div className="container">
-          <Filter filter={onChangeSearchHandler} />
-          <ItemList isLoading={isLoading} items={items}/>
+          <Filter filter={onChangeSearchHandler} itemCount={items.length} />
+          <ItemList isLoading={isLoading} items={items} />
         </div>
       )}
     </React.Fragment>

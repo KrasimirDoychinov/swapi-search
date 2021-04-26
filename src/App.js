@@ -33,7 +33,10 @@ function App() {
         }
 
         if (x.terrain) {
-          x._terrain = x.terrain.split(', ').map(x => x.slice(0, 1).toUpperCase() + x.slice(1).toLowerCase()).join(', ');
+          x._terrain = x.terrain
+            .split(", ")
+            .map((x) => x.slice(0, 1).toUpperCase() + x.slice(1).toLowerCase())
+            .join(", ");
         }
       }
       allItems.push(x);
@@ -56,13 +59,19 @@ function App() {
         (x) =>
           x.name && x.name.toLowerCase().includes(filterObj.value.toLowerCase())
       );
-    } else if (filterObj.filter) {
+    } else if (filterObj.filter == 'homeworld') {
       filteredItems = allItems.filter(
         (x) =>
           x.homeWorld &&
           x.homeWorld.toLowerCase().includes(filterObj.value.toLowerCase())
       );
-    }
+    } else if (filterObj.filter == 'terrain') {
+      filteredItems = allItems.filter(
+        (x) =>
+          x.terrain &&
+          x.terrain.toLowerCase().includes(filterObj.value.toLowerCase())
+      );
+    } 
 
     window.scrollTo(0, 0);
     setItems(filteredItems);

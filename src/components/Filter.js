@@ -31,6 +31,9 @@ function Filter(props) {
           <option className="blue-text" value="homeworld">
             Homeworld
           </option>
+          <option className="blue-text" value="terrain">
+            Terrain
+          </option>
         </select>
       </div>
       <div className="col-md-3 blue-text">
